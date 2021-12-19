@@ -41,9 +41,10 @@ FetchContent_MakeAvailable(googletest)
 
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(Gtest main_test.cpp )
+add_executable(Gtest main_test.cpp urlRequestsTest.cpp)
 
 
 target_link_libraries(Gtest gtest gtest_main)
 target_link_libraries(Gtest gmock gmock_main)
+target_link_libraries(Gtest FinanceData)
 

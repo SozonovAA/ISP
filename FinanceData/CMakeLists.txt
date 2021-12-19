@@ -6,7 +6,7 @@ include(FetchContent)
 
 message(FinanceData)
 
-#add_library(FinanceData STATIC )
+add_library(FinanceData STATIC urlRequests.cpp urlRequests.h)
 
 include(BoostRootPath.cmake)
 #if(True)
@@ -25,6 +25,16 @@ include(BoostRootPath.cmake)
 #else()
 #    message(BOOST NOT FOUND)
 #endif()
+FetchContent_Declare(
+        curl
+        GIT_REPOSITORY https://github.com/curl/curl.git
+        GIT_TAG master
+)
+FetchContent_GetProperties(curl)
+if(NOT curl_POPULATED)
+    FetchContent_Populate(curl)
+    add_subdirectory(${curl_SOURCE_DIR} PRIVATE ${curlBINARY_DIR})
+endif()
 
 FetchContent_Declare(
         json
@@ -36,11 +46,13 @@ if(NOT json_POPULATED)
     FetchContent_Populate(json)
     add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR})
 endif()
-#target_link_libraries(FinanceData PRIVATE nlohmann_json::nlohmann_json)
+
+target_link_libraries(FinanceData nlohmann_json::nlohmann_json)
+target_link_libraries(FinanceData libcurl)
 
 
 if(MINGW)
-#    target_link_libraries(FinanceData PRIVATE ws2_32)
+    target_link_libraries(FinanceData PRIVATE ws2_32)
 endif()
 
 
