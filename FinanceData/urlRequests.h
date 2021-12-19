@@ -5,11 +5,14 @@
 
 #ifndef ISP_URLREQUESTS_H
 #define ISP_URLREQUESTS_H
-
+#include <string>
 
 class urlRequests {
 public:
     void request();
+
+private:
+    const std::string API_KEY = "6UQN44IKREM4QDY3";
 
 };
 
