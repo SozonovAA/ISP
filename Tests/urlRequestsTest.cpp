@@ -10,9 +10,9 @@
 namespace testing {
 
     TEST(urlRequestTests, SimpleRequestTest) {
-        urlRequests exampleUrl;
+        financedata::urlRequests exampleUrl;
 
-        exampleUrl.request();
+        std::cout << exampleUrl.request();
     }
 } // namespace testing
 
