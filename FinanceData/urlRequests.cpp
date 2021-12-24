@@ -23,6 +23,7 @@ namespace financedata {
         std::string response_string;
         std::string header_string;
 
+        //todo: подумать как это делать
         AlphaVintageAPIParametrs api {
             .function = AlphaVintageAPIParametrs::TIME_SERIES_DAILY_ADJUSTED,
             .symbol = "IBM"
