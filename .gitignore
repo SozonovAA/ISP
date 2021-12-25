@@ -1,4 +1,5 @@
 .idea/
+*git.sh
 CMakeLists.txt.user
 
 # Prerequisites
