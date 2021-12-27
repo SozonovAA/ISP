@@ -52,7 +52,7 @@ target_link_libraries(FinanceData libcurl)
 
 
 if(MINGW)
-    target_link_libraries(FinanceData PRIVATE ws2_32)
+    target_link_libraries(FinanceData ws2_32)
 endif()
 
 

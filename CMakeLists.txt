@@ -8,10 +8,4 @@ add_subdirectory(FinanceData)
 add_subdirectory(Graphics)
 add_subdirectory(TableRead)
 
-#add_executable(ISP main.cpp)
-
-if(WIN32)
-    target_link_libraries(ISP wsock32 ws2_32)
-endif()
-
 add_subdirectory(Tests)
