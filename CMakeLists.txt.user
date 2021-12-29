@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.1, 2021-12-28T22:43:38. -->
+<!-- Written by QtCreator 6.0.1, 2021-12-29T20:02:54. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -70,8 +70,8 @@
    <valuemap type="QVariantMap" key="AutoTest.CheckStates">
     <value type="Qt::CheckState" key="1@/home/andrey/cxx_prog/ISP/Tests/LogTest.cpp:LogTest">Checked</value>
     <value type="Qt::CheckState" key="1@/home/andrey/cxx_prog/ISP/Tests/LogTest.cpp:SimpleLogTest">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/andrey/cxx_prog/ISP/Tests/urlRequestsTest.cpp:SimpleRequestTest">Unchecked</value>
-    <value type="Qt::CheckState" key="1@/home/andrey/cxx_prog/ISP/Tests/urlRequestsTest.cpp:urlRequestTests">Unchecked</value>
+    <value type="Qt::CheckState" key="1@/home/andrey/cxx_prog/ISP/Tests/urlRequestsTest.cpp:SimpleRequestTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/andrey/cxx_prog/ISP/Tests/urlRequestsTest.cpp:urlRequestTests">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">false</value>
