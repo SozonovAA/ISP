@@ -2,6 +2,7 @@
 #define LOG_H
 
 #include <iostream>
+#include <vector>
 
 namespace utils {
 /**
@@ -38,6 +39,8 @@ private:
 
 
     void write_to_log( std::string&& _message );
+
+    std::size_t log_pos;
 };
 
 template<class T>
@@ -47,6 +50,7 @@ LogStream &LogStream::operator<< ( T arg )
         write_to_log( std::move( arg ) );
     }
     else {
+        //todo: разобраться, как передавать не строку
         //write_to_log( std::move( std::to_string( arg ) ) );
     }
     return *this;

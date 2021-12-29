@@ -13,7 +13,10 @@ namespace testing {
     TEST(LogTest, SimpleLogTest) {
         utils::LogStream test_log( "TestThread", 0, "Test_Module" );
 
+        utils::LogStream test_log1( "TestThread1", 1, "Test_Module1" );
+
         test_log << std::string( "Hello Test" );
+        test_log1 << std::string( "Hello Test" );
     }
 
 } // namespace testing
