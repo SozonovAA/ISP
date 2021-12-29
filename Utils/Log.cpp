@@ -18,17 +18,13 @@ struct LogVar{
     IP7_Trace         *l_pTrace     = NULL;
     IP7_Trace::hModule l_hModule    = NULL;
 
-    ~LogVar();
-
 };
 
 static std::vector<LogVar> logs;
 
-
-
-LogStream::LogStream(std::string _thr_name,
-                     std::size_t _thr_numb,
-                     std::string _module_name ) :
+LogStream::LogStream( std::string _thr_name,
+                      std::size_t _thr_numb,
+                      std::string _module_name ) :
     thread_name( _thr_name )
   , thread_numb( _thr_numb )
   , module_name( _module_name )
@@ -43,6 +39,7 @@ LogStream::LogStream(std::string _thr_name,
                                     "/P7.Trc.Verb=0 /P7.Files=5") );
 
     //create P7 trace object 1
+    //todo: разобраться почему у второго файла нет названия
     logs.rbegin()->l_pTrace = P7_Create_Trace(logs.rbegin()->l_pClient,
         TM( (std::string{ "Trace channel " }
              + std::to_string( trace_ch_count++ ) ).c_str() ) );
@@ -67,11 +64,7 @@ LogStream::~LogStream()
     }
 }
 
-LogVar::~LogVar()
-{
-
-}
-
+//todo: пасринг сообщения
 void LogStream::write_to_log( std::string&& _message )
 {
     logs[log_pos].l_pTrace->P7_TRACE(logs[log_pos].l_hModule, TM( _message.c_str() ) );

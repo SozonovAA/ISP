@@ -15,7 +15,7 @@ namespace testing {
 
         utils::LogStream test_log1( "TestThread1", 1, "Test_Module1" );
 
-        test_log << std::string( "Hello Test" );
+        test_log << std::string( "Hello Test" ) << 5;
         test_log1 << std::string( "Hello Test" );
     }
 

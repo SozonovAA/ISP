@@ -43,15 +43,20 @@ private:
     std::size_t log_pos;
 };
 
+/**
+ * @brief LogStream::operator <<
+ * @param arg
+ * @return
+ */
+
 template<class T>
 LogStream &LogStream::operator<< ( T arg )
 {
-    if( typeid ( arg ) == typeid ( std::string ) ){
+    if constexpr ( std::is_same_v<T, std::string> ){
         write_to_log( std::move( arg ) );
     }
     else {
-        //todo: разобраться, как передавать не строку
-        //write_to_log( std::move( std::to_string( arg ) ) );
+        write_to_log( std::move( std::to_string( arg ) ) );
     }
     return *this;
 }
