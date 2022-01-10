@@ -4,8 +4,11 @@ message(Main)
 
 set(CMAKE_CXX_STANDARD 20)
 
+
+add_subdirectory(Libs/libP7)
 add_subdirectory(FinanceData)
 add_subdirectory(Graphics)
 add_subdirectory(TableRead)
+add_subdirectory(Utils)
 
 add_subdirectory(Tests)
