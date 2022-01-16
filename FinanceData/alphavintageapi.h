@@ -2,16 +2,19 @@
 #define ALPHAVINTAGEAPI_H
 #include <functional>
 #include <string>
+#include <ctime>
+#include <map>
+
 
 namespace financedata {
 
 /**
- * Parameters to AlphaVintage API request
+ * Класс отвечающий за создание запросов к AlphaVintage API.
  */
-class AlphaVintageAPI
+class AlphaVintageAPIRequester
 {
 public:
-    AlphaVintageAPI( std::function< std::string( std::string ) >  _req );
+    AlphaVintageAPIRequester( std::function< std::string( std::string ) >  _req );
 
     struct AlphaVintageAPIParameters {
 
@@ -61,10 +64,10 @@ public:
 
 
     /**
-     * @brief get_request отправка юрл запроса, по сформированым полям класса
+     * @brief send_request отправка юрл запроса, по сформированым полям класса
      * @return ответ на запрос
      */
-    std::string get_request();
+    std::string send_request();
 private:
 
     /**
@@ -79,6 +82,31 @@ private:
     std::function< std::string( std::string ) > request;
 
 
+
+};
+
+/**
+ * Класс отвечающий за обработку ответов от AlphaVintage API.
+ */
+class AlphaVintageAPIReplyer
+{
+public:
+    /**
+     * @brief parce Метод разбора ответа на https запрос.
+     */
+    void parce( std::string );
+
+    /**
+     * @brief get_daily_price метод получения константной ссылки
+     *       на получившиеся данные после разбора
+     * @return Стоимость компании по дням.
+     */
+    const std::map<std::tm, double> & get_daily_price();
+private:
+    /**
+     * @brief daily_price Стоимость компании по дням.
+     */
+    std::map<std::tm, double> daily_price;
 
 };
 
