@@ -1,5 +1,5 @@
 #include "alphavintageapi.h"
-#include <iostream>
+
 namespace financedata {
 
 AlphaVintageAPI::AlphaVintageAPI( std::function< std::string( std::string ) >  _req)
@@ -43,8 +43,6 @@ std::string AlphaVintageAPI::create_request() {
     }
 
     return_string += ( "&apikey=" + api_params.API_KEY );
-
-    std::cout << return_string << std::endl;
 
     return return_string;
 }
