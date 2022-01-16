@@ -5,14 +5,19 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
+#include "../FinanceData/alphavintageapi.h"
 #include "../FinanceData/urlRequests.h"
 
 namespace testing {
 
     TEST(urlRequestTests, SimpleRequestTest) {
-        financedata::urlRequests exampleUrl;
+        financedata::AlphaVintageAPI testReq( financedata::request );
 
-        std::cout << exampleUrl.request();
+        testReq.api_params.symbol = "IBM";
+        testReq.api_params.function = financedata::AlphaVintageAPI::
+                AlphaVintageAPIParameters::Function::TIME_SERIES_DAILY;
+
+        std::cout << testReq.get_request();
     }
 } // namespace testing
 

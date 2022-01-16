@@ -6,7 +6,7 @@ include(FetchContent)
 
 message(FinanceData)
 
-add_library(FinanceData STATIC urlRequests.cpp urlRequests.h)
+add_library(FinanceData STATIC urlRequests.cpp urlRequests.h alphavintageapi.cpp alphavintageapi.h ihistiricaldata.h)
 
 include(BoostRootPath.cmake)
 #if(True)
