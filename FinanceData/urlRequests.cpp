@@ -17,23 +17,18 @@ size_t writeFunction(void* ptr, size_t size, size_t nmemb, std::string* data) {
 
 namespace financedata {
 
-    std::string urlRequests::request() {
+    std::string request(  std::string _req  ) {
         CURL *curl;
         CURLcode res;
 
         std::string response_string;
         std::string header_string;
 
-        //todo: подумать как это делать
-        AlphaVintageAPIParametrs api {
-            .function = AlphaVintageAPIParametrs::TIME_SERIES_DAILY_ADJUSTED,
-            .symbol = "IBM"
-        };
-
         curl = curl_easy_init();
         if (curl) {
-            res = curl_easy_setopt(curl, CURLOPT_URL, api.request().c_str());
-            /* example.com is redirected, so we tell libcurl to follow redirection */
+            res = curl_easy_setopt(curl, CURLOPT_URL,
+                                   _req.c_str());
+
             curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeFunction);
@@ -53,37 +48,5 @@ namespace financedata {
         return response_string;
     }
 
-    std::string AlphaVintageAPIParametrs::request() {
-        std::string return_string {"https://www.alphavantage.co/query?"};
-        switch ( function ) {
-            case TIME_SERIES_DAILY_ADJUSTED:
-                return_string += "function=TIME_SERIES_DAILY_ADJUSTED";
-                break;
 
-        }
-
-        return_string += ( "&symbol=" + symbol );
-
-        if ( oz ) {
-            switch ( oz ) {
-                case COMPACT:
-                    return_string += "&outputsize=compact";
-                    break;
-                case FULL:
-                    return_string += "&outputsize=full";
-                    break;
-            }
-        }
-        if ( datatype ) {
-            switch ( datatype ) {
-                case JSON:
-                    return_string += "&datatype=json";
-                    break;
-            }
-        }
-
-        return_string += ( "&apikey=" + API_KEY );
-
-        return return_string;
-    }
 }
