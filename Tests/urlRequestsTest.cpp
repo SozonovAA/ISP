@@ -12,12 +12,15 @@ namespace testing {
 
     TEST(urlRequestTests, SimpleRequestTest) {
         financedata::AlphaVintageAPIRequester testReq( financedata::request );
+        financedata::AlphaVintageAPIReplyer replyer;
 
         testReq.api_params.symbol = "IBM";
         testReq.api_params.function = financedata::AlphaVintageAPIRequester::
                 AlphaVintageAPIParameters::Function::TIME_SERIES_DAILY;
+        testReq.api_params.oz = financedata::AlphaVintageAPIRequester::
+                AlphaVintageAPIParameters::OutputSize::FULL;
 
-        std::cout << testReq.send_request();
+        replyer.parce( testReq.send_request() );
     }
 } // namespace testing
 

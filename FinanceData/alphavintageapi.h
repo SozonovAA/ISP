@@ -3,11 +3,12 @@
 #include <functional>
 #include <string>
 #include <ctime>
+#include <tuple>
 #include <map>
 
 
 namespace financedata {
-
+//todo: подумать над шаблонным классом, для данных пацанов
 /**
  * Класс отвечающий за создание запросов к AlphaVintage API.
  */
@@ -58,7 +59,9 @@ public:
         const std::string API_KEY = "6UQN44IKREM4QDY3";
     };
 
-
+    /**
+     * @brief api_params Настраивыемые параметры для создания запроса.
+     */
     AlphaVintageAPIParameters api_params;
 
 
@@ -101,12 +104,14 @@ public:
      *       на получившиеся данные после разбора
      * @return Стоимость компании по дням.
      */
-    const std::map<std::tm, double> & get_daily_price();
+    const std::map< std::tuple< int, int, int >, double > & get_daily_price();
+
 private:
     /**
      * @brief daily_price Стоимость компании по дням.
      */
-    std::map<std::tm, double> daily_price;
+    //todo: заменить std::tuple на структуру
+    std::map< std::tuple< int, int, int >, double > daily_price;
 
 };
 

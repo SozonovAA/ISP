@@ -1,4 +1,7 @@
 #include "alphavintageapi.h"
+#include "../Utils/JsonParser.h"
+
+#include <iostream>
 
 namespace financedata {
 
@@ -48,13 +51,24 @@ std::string AlphaVintageAPIRequester::create_request() {
     return return_string;
 }
 
-//todo: пользуясь парсером JSON из Utils разобрать получившийся запрос
-void AlphaVintageAPIReplyer::parce( std::string )
-{
 
+void AlphaVintageAPIReplyer::parce( std::string _reply)
+{
+    asc::JsonParser parser;
+    auto query = parser.parse( _reply );
+    for ( auto [ key, value] : query.dict()["Time Series (Daily)"].dict() )
+    {
+        daily_price[ std::make_tuple(
+                     std::stoi( key.substr(0, 4) ),
+                     std::stoi( key.substr(5, 2) ),
+                     std::stoi( key.substr(8, 2) )
+        )] = std::stod( value.dict()["4. close"].string() );
+    }
+
+    std::cout << daily_price.size() << std::endl;
 }
 
-const std::map<tm, double> &AlphaVintageAPIReplyer::get_daily_price()
+const std::map< std::tuple< int, int, int >, double > &AlphaVintageAPIReplyer::get_daily_price()
 {
     return daily_price;
 }
