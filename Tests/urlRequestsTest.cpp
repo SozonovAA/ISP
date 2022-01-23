@@ -21,6 +21,7 @@ namespace testing {
                 AlphaVintageAPIParameters::OutputSize::FULL;
 
         replyer.parce( testReq.send_request() );
+
     }
 } // namespace testing
 

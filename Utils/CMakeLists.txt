@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 message(Utils)
 set (json_path https://github.com/nlohmann/json.git)
 
-add_library(Utils STATIC Log.h Log.cpp JsonParser.h JsonParser.cpp Parser.cpp Parser.h)
+add_library(Utils STATIC Log.h Log.cpp JsonParser.h JsonParser.cpp Parser.cpp Parser.h datetime.cpp datetime.h)
 
 FetchContent_Declare(
         json
