@@ -5,6 +5,7 @@
 #include <tuple>
 #include <compare>
 #include <stdexcept>
+#include <shared_mutex>
 
 
 
@@ -14,66 +15,155 @@ typedef std::size_t year_t;
 typedef std::size_t mounth_t;
 typedef std::size_t day_t;
 
+
 struct Date {
-
-    bool operator==( const Date & _r ) const {
-        return _r == *this;
-    }
-
-    std::strong_ordering operator<=>( const Date & _r ) const {
-        if( this->year == _r.year ) {
-            if( this->mounth == _r.mounth ) {
-                if( this->day == _r.day ) {
-                    return std::strong_ordering::equal ;
-                } else
-                    if ( this->day > _r.day ) {
-                        return  std::strong_ordering::less;
-                    } else {
-                        return std::strong_ordering::greater;
-                    }
-            } else
-                if ( this->mounth > _r.mounth ) {
-                    return  std::strong_ordering::less;
-                } else {
-                    return std::strong_ordering::greater;
-                }
-
-        } else
-            if ( this->year > _r.year ) {
-                return  std::strong_ordering::less;
-            } else {
-                return std::strong_ordering::greater;
-            }
-    }
-
     Date ( year_t _y, mounth_t _m, day_t _d ) :
         year( _y ),
         mounth( _m ),
         day ( _d )
     {
-        if( ( year > 3000 ) || ( year < 0 ) )
-            throw std::range_error {"Seted uncorrect year!"};
-
-        if( ( mounth > 12 ) || ( mounth < 0 ) )
-            throw std::range_error {"Seted uncorrect mounth!"};
-
-        if( ( day > 30 ) || ( day < 0 ) )
-            throw std::range_error {"Seted uncorrect day!"};
+        date_check();
     };
+
+    Date ( std::tuple< year_t, mounth_t, day_t >& _r) :
+            year( std::get<0>(_r) ),
+            mounth( std::get<1>(_r) ),
+            day ( std::get<2>(_r) )
+    {
+        date_check();
+    };
+
+    Date( Date &_r ) :
+        year( _r.year ),
+        mounth( _r.mounth ),
+        day ( _r.day ) {
+        date_check();
+    };
+
+    Date( const Date &_r ) :
+        year( _r.year ),
+        mounth( _r.mounth ),
+        day ( _r.day ) {
+        date_check();
+    };
+
+    Date& operator=(const Date& _r) {
+        // Проверка на самоприсваивание
+        if ( &_r == this)
+            return *this;
+
+        date_check();
+        year =  _r.year;
+        mounth = _r.mounth;
+        day = _r.day;
+        return *this;
+
+    };
+
+    Date& operator=( Date&& _r) {
+        // Проверка на самоприсваивание
+        if ( &_r == this)
+            return *this;
+
+        date_check();
+        _r.year = 0;
+        _r.mounth = 0;
+        _r.day = 0;
+        return *this;
+    };
+
+    Date& operator=(const  std::tuple< year_t, mounth_t, day_t >& _r) {
+        // Проверка на самоприсваивание
+        if ( _r == *this)
+            return *this;
+
+        date_check();
+        this->get_date() = _r;
+        return *this;
+    };
+
+    Date( Date &&_r ) :
+        year( _r.year ),
+        mounth( _r.mounth ),
+        day ( _r.day ) {
+
+        date_check();
+        _r = Date( 0, 0 , 0);
+    };
+
 
     std::tuple< year_t&, mounth_t&, day_t& > get_date() {
+        std::lock_guard sharedLock_date( date_lock );
         return { year, mounth, day };
     };
 
-    std::tuple< const year_t&, const mounth_t&, const day_t& > сget_date() {
+    const std::tuple< const year_t&, const mounth_t&, const day_t& > сget_date() {
+        std::shared_lock sharedLock_date( sh_date_lock );
         return { year, mounth, day };
-    };
+    }
 
 private:
     year_t year = 0;
     mounth_t mounth = 0;
     day_t day = 0;
+
+    //todo: плохая проверка, не учитываю месяц
+    void date_check() {
+        if( ( year > 5000 ) || ( year < 0 ) )
+            throw std::range_error {"Seted uncorrect year!"};
+
+        if( ( mounth > 12 ) || ( mounth < 0 ) )
+            throw std::range_error {"Seted uncorrect mounth!"};
+
+        if( ( day > 31 ) || ( day < 0 ) )
+            throw std::range_error {"Seted uncorrect day!"};
+    }
+
+    std::shared_mutex sh_date_lock;
+    std::mutex date_lock;
+
+public:
+    bool operator==( const Date & _r ) const {
+        return ( std::make_tuple( (*this).year, (*this).mounth , (*this).day)
+                 == std::make_tuple( _r.year, _r.mounth , _r.day) );    }
+
+    bool operator==( const std::tuple<
+                     const year_t&,
+                     const mounth_t&,
+                     const day_t& > _r ) const {
+        return ( std::make_tuple( (*this).year, (*this).mounth , (*this).day)
+                 == _r );    }
+
+
+    std::strong_ordering operator<=>( const Date & _r ) const {
+
+        return ( std::make_tuple( (*this).year, (*this).mounth , (*this).day)
+                 <=> std::make_tuple( _r.year, _r.mounth , _r.day) );
+
+    }
+
+    std::strong_ordering operator<=>( const std::tuple<
+                                      const year_t&,
+                                      const mounth_t&,
+                                      const day_t& > _r ) const {
+
+        return ( std::make_tuple( (*this).year, (*this).mounth , (*this).day)
+                 <=> _r );
+
+    }
+
+    //префиксный инкремент
+    friend const Date& operator++(Date& i);
+
+    //префиксный декремент
+    friend const Date& operator--(Date& i);
+
+    //todo: перегрузить бинарные операторы
+    //https://habr.com/ru/post/132014/
+    //https://habr.com/ru/post/66318/
 };
+
+
 
 struct Time {
     std::size_t hour = 0;

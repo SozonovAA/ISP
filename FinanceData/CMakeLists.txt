@@ -10,9 +10,7 @@ add_definitions(-DBOOST_ALL_DYN_LINK)
 add_library(FinanceData STATIC urlRequests.cpp urlRequests.h alphavintageapi.cpp alphavintageapi.h ihistiricaldata.h)
 
 include(BoostRootPath.cmake)
-# путь к коревому каталогу буста (например: с:/boost)
-#set(BOOST_ROOT ${TARGET_PATH_boost})
-#https://www.cyberforum.ru/boost-cpp/thread1799936.html
+
 if(True)
     set(Boost_USE_STATIC_LIBS ON)
     add_definitions(-DBOOST_PYTHON_STATIC_LIB)
@@ -30,11 +28,6 @@ find_package(Boost 1.76.0 COMPONENTS ${boost_COMPONENTS} REQUIRED)
 set(BOOST_LIBRARYDIR ${BOOST_ROOT}/libs)
 
 message(STATUS "Boost version: ${Boost_VERSION}")
-
-
-message(${Boost_INCLUDE_DIRS})
-
-
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries(FinanceData ${Boost_LIBRARIES})
