@@ -7,6 +7,10 @@
 #include <map>
 
 
+
+#include "../Utils/datetime.h"
+
+
 namespace financedata {
 //todo: подумать над шаблонным классом, для данных пацанов
 /**
@@ -111,6 +115,7 @@ private:
      * @brief daily_price Стоимость компании по дням.
      */
     //todo: заменить std::tuple на структуру
+    // реализовать через boost::date_time
     std::map< std::tuple< int, int, int >, double > daily_price;
 
 };

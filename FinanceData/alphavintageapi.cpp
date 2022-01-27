@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+
+#include "boost/date_time/gregorian/gregorian.hpp"
+
 namespace financedata {
 
 AlphaVintageAPIRequester::AlphaVintageAPIRequester
@@ -67,6 +70,7 @@ void AlphaVintageAPIReplyer::parce( std::string _reply)
 
     std::cout << daily_price.size() << std::endl;
 }
+
 
 const std::map< std::tuple< int, int, int >, double > &AlphaVintageAPIReplyer::get_daily_price()
 {

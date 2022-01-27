@@ -3,4 +3,4 @@
 
 
 set (json_path https://github.com/nlohmann/json.git)
-#set (BOOST_ROOT C:/boost_1_77_0)
+#set (BOOST_ROOT ~/cpp_libs/boost_1_78_0_1)
