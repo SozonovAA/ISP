@@ -5,7 +5,7 @@
 #include <tuple>
 #include <compare>
 #include <stdexcept>
-#include <shared_mutex>
+
 
 
 
@@ -93,12 +93,10 @@ struct Date {
 
 
     std::tuple< year_t&, mounth_t&, day_t& > get_date() {
-        std::lock_guard sharedLock_date( date_lock );
         return { year, mounth, day };
     };
 
     const std::tuple< const year_t&, const mounth_t&, const day_t& > сget_date() {
-        std::shared_lock sharedLock_date( sh_date_lock );
         return { year, mounth, day };
     }
 
@@ -107,20 +105,7 @@ private:
     mounth_t mounth = 0;
     day_t day = 0;
 
-    //todo: плохая проверка, не учитываю месяц
-    void date_check() {
-        if( ( year > 5000 ) || ( year < 0 ) )
-            throw std::range_error {"Seted uncorrect year!"};
-
-        if( ( mounth > 12 ) || ( mounth < 0 ) )
-            throw std::range_error {"Seted uncorrect mounth!"};
-
-        if( ( day > 31 ) || ( day < 0 ) )
-            throw std::range_error {"Seted uncorrect day!"};
-    }
-
-    std::shared_mutex sh_date_lock;
-    std::mutex date_lock;
+    void date_check();
 
 public:
     bool operator==( const Date & _r ) const {
@@ -152,19 +137,56 @@ public:
 
     }
 
-    //префиксный инкремент
+    /**
+     * @brief operator ++ префиксный декремент дня
+     */
     friend const Date& operator++(Date& i);
 
-    //префиксный декремент
+    /**
+     * @brief add_week функция увеличивает дату на неделю
+     * @return ссылка на получившуюся дату
+     */
+    const Date& add_week();
+
+    /**
+     * @brief add_mounth функция увеличивает дату на месяц
+     * @return ссылка на получившуюся дату
+     */
+    const Date& add_month();
+
+    /**
+     * @brief add_year функция увеличивает дату на год
+     * @return ссылка на получившуюся дату
+     */
+    const Date& add_year();
+
+
+    /**
+     * @brief operator -- префиксный декремент дня
+     */
     friend const Date& operator--(Date& i);
 
-    //todo: перегрузить бинарные операторы
-    //https://habr.com/ru/post/132014/
-    //https://habr.com/ru/post/66318/
+    /**
+     * @brief add_week функция уменьшает дату на неделю
+     * @return ссылка на получившуюся дату
+     */
+    const Date& decrease_week();
+
+    /**
+     * @brief add_mounth функция уменьшает дату на месяц
+     * @return ссылка на получившуюся дату
+     */
+    const Date& decrease_month();
+
+    /**
+     * @brief add_year функция уменьшает дату на год
+     * @return ссылка на получившуюся дату
+     */
+    const Date& decrease_year();
 };
 
 
-
+//todo: запилить классы
 struct Time {
     std::size_t hour = 0;
     std::size_t minutes = 0;
