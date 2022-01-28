@@ -52,10 +52,10 @@ struct Date {
         if ( &_r == this)
             return *this;
 
-        date_check();
         year =  _r.year;
         mounth = _r.mounth;
         day = _r.day;
+        
         return *this;
 
     };
@@ -65,10 +65,12 @@ struct Date {
         if ( &_r == this)
             return *this;
 
-        date_check();
+        this = &_r;
+        
         _r.year = 0;
         _r.mounth = 0;
         _r.day = 0;
+        
         return *this;
     };
 
@@ -77,8 +79,8 @@ struct Date {
         if ( _r == *this)
             return *this;
 
-        date_check();
         this->get_date() = _r;
+        
         return *this;
     };
 
@@ -86,8 +88,6 @@ struct Date {
         year( _r.year ),
         mounth( _r.mounth ),
         day ( _r.day ) {
-
-        date_check();
         _r = Date( 0, 0 , 0);
     };
 
