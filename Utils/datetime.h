@@ -37,14 +37,12 @@ struct Date {
         year( _r.year ),
         mounth( _r.mounth ),
         day ( _r.day ) {
-        date_check();
     };
 
     Date( const Date &_r ) :
         year( _r.year ),
         mounth( _r.mounth ),
         day ( _r.day ) {
-        date_check();
     };
 
     Date& operator=(const Date& _r) {
@@ -65,7 +63,9 @@ struct Date {
         if ( &_r == this)
             return *this;
 
-        this = &_r;
+        year =  _r.year;
+        mounth = _r.mounth;
+        day = _r.day;
         
         _r.year = 0;
         _r.mounth = 0;
