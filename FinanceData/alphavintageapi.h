@@ -2,6 +2,7 @@
 #define ALPHAVINTAGEAPI_H
 #include <functional>
 #include <string>
+#include <string_view>
 #include <ctime>
 #include <tuple>
 #include <map>
@@ -43,8 +44,9 @@ public:
          * Размер получаемых данных.
          */
         enum OutputSize : std::uint16_t {
-            /** Опция не оспользуется */
+            /** Данные за последние сто дней */
             COMPACT = 1,
+            /** Все доступные данные о стоимости компании */
             FULL,
         };
         OutputSize oz{ _NULL };
@@ -65,9 +67,16 @@ public:
     };
 
     /**
-     * @brief api_params Настраивыемые параметры для создания запроса.
+     * @brief create_daily_prise_req функция для создания зпроса на получение
+     *                              стоимости компании по дням.
+     * @param company_ticker тикер компании
+     * @param _oz количество запрашиваемых данных
      */
-    AlphaVintageAPIParameters api_params;
+    void create_daily_prise_req(
+        std::string_view company_ticker,
+        AlphaVintageAPIRequester::AlphaVintageAPIParameters::OutputSize _oz =
+        AlphaVintageAPIRequester::AlphaVintageAPIParameters::OutputSize::COMPACT
+        );
 
 
 
@@ -77,6 +86,11 @@ public:
      */
     std::string send_request();
 private:
+
+    /**
+     * @brief api_params Настраивыемые параметры для создания запроса.
+     */
+    AlphaVintageAPIParameters api_params;
 
     /**
      * @brief create_request метод формирования URL зарпоса на основании полей класса
@@ -96,9 +110,16 @@ private:
 /**
  * Класс отвечающий за обработку ответов от AlphaVintage API.
  */
-class AlphaVintageAPIReplyer
+class AlphaVintageAPIReplyer : protected AlphaVintageAPIRequester
 {
 public:
+
+    AlphaVintageAPIReplyer(
+            std::function< std::string( std::string ) >  _req ) :
+        AlphaVintageAPIRequester( _req ) {
+
+    }
+
     /**
      * @brief parce Метод разбора ответа на https запрос.
      */

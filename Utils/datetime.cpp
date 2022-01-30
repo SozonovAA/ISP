@@ -83,6 +83,7 @@ const Date& Date::decrease_year()
 
 void Date::date_check()
 {
+
     b_date a( this->year, this->mounth, this->day );
 
 }

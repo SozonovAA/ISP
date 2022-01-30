@@ -4,6 +4,7 @@
 #include <iostream>
 
 
+
 #include "boost/date_time/gregorian/gregorian.hpp"
 
 namespace financedata {
@@ -12,6 +13,18 @@ AlphaVintageAPIRequester::AlphaVintageAPIRequester
     ( std::function< std::string( std::string ) >  _req)
     : request( _req)
 {
+
+}
+
+void AlphaVintageAPIRequester::create_daily_prise_req(
+        std::string_view company_ticker,
+        AlphaVintageAPIRequester::AlphaVintageAPIParameters::OutputSize _oz  )
+{
+
+    api_params.symbol = company_ticker;
+    api_params.function = financedata::AlphaVintageAPIRequester::
+            AlphaVintageAPIParameters::Function::TIME_SERIES_DAILY;
+    api_params.oz = _oz;
 
 }
 
@@ -61,17 +74,19 @@ void AlphaVintageAPIReplyer::parce( std::string _reply)
     auto query = parser.parse( _reply );
     for ( auto [ key, value] : query.dict()["Time Series (Daily)"].dict() )
     {
-        daily_price[ utils::Date{
-                     std::stoi( key.substr(0, 4) ),
-                     std::stoi( key.substr(5, 2) ),
-                     std::stoi( key.substr(8, 2) )
-        }] = std::stod( value.dict()["4. close"].string() );
-    }
+        utils::Date _date{
+                             std::stoi( key.substr(0, 4) ),
+                             std::stoi( key.substr(5, 2) ),
+                             std::stoi( key.substr(8, 2) )
+                };
+        daily_price[ _date ] = std::stod( value.dict()["4. close"].string() );
 
+    }
 }
 
 
-const std::map< utils::Date, utils::Transaction_t::price_t > &AlphaVintageAPIReplyer::get_daily_price()
+const std::map< utils::Date, utils::Transaction_t::price_t >
+    &AlphaVintageAPIReplyer::get_daily_price()
 {
     return daily_price;
 }

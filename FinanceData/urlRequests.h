@@ -8,6 +8,11 @@
 #include <string>
 namespace financedata {
 
+/**
+ * @brief request функция реализует https запрос
+ * @param _req https запрос
+ * @return результат запроса
+ */
 std::string request( std::string _req );
 
 }
