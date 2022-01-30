@@ -72,13 +72,13 @@ void AlphaVintageAPIReplyer::parce( std::string _reply)
 {
     asc::JsonParser parser;
     auto query = parser.parse( _reply );
-    for ( auto [ key, value] : query.dict()["Time Series (Daily)"].dict() )
+    for ( auto &[ key, value] : query.dict()["Time Series (Daily)"].dict() )
     {
-        utils::Date _date{
+        utils::Date _date (
                              std::stoi( key.substr(0, 4) ),
                              std::stoi( key.substr(5, 2) ),
                              std::stoi( key.substr(8, 2) )
-                };
+                );
         daily_price[ _date ] = std::stod( value.dict()["4. close"].string() );
 
     }
