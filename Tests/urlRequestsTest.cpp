@@ -7,20 +7,16 @@
 
 #include "../FinanceData/alphavintageapi.h"
 #include "../FinanceData/urlRequests.h"
+#include "../FinanceData/historicaldatapresenter.h"
 
 namespace testing {
 
     TEST(urlRequestTests, SimpleRequestTest) {
-        financedata::AlphaVintageAPIRequester testReq( financedata::request );
-        financedata::AlphaVintageAPIReplyer replyer;
 
-        testReq.api_params.symbol = "IBM";
-        testReq.api_params.function = financedata::AlphaVintageAPIRequester::
-                AlphaVintageAPIParameters::Function::TIME_SERIES_DAILY;
-        testReq.api_params.oz = financedata::AlphaVintageAPIRequester::
-                AlphaVintageAPIParameters::OutputSize::FULL;
+        financedata::HistoricalDataPresenter hdp( financedata::request );
+        EXPECT_EQ( hdp.getDailyPrise( "IBM" ).size(), 100);
+        EXPECT_TRUE( hdp.getDailyPrise( "IBM", financedata::OutSize::FULL ).size() > 5000);
 
-        replyer.parce( testReq.send_request() );
 
     }
 } // namespace testing

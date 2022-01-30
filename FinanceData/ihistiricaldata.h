@@ -16,7 +16,8 @@ enum OutSize : std::uint16_t {
 
 class IHistoricalData {
 public:
-    virtual map< utils::Date, utils::Transaction_t::price_t >getDailyPrise (std::string _company, OutSize _size) = 0;
+    virtual std::map< utils::Date, utils::Transaction_t::price_t >
+    getDailyPrise (std::string _company, OutSize _size) = 0;
 
 
 };

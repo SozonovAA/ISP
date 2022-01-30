@@ -16,6 +16,12 @@ namespace utils {
 using namespace Data_t;
 
 struct Date {
+    Date( ) :
+        year( 0 ),
+        mounth( 1 ),
+        day ( 1 ) {
+
+    }
     Date ( year_t _y, mounth_t _m, day_t _d ) :
         year( _y ),
         mounth( _m ),
