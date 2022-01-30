@@ -45,6 +45,19 @@ struct Date {
         day ( _r.day ) {
     };
 
+    Date& operator=( Date& _r) {
+        // Проверка на самоприсваивание
+        if ( &_r == this)
+            return *this;
+
+        year =  _r.year;
+        mounth = _r.mounth;
+        day = _r.day;
+
+        return *this;
+
+    };
+
     Date& operator=(const Date& _r) {
         // Проверка на самоприсваивание
         if ( &_r == this)
