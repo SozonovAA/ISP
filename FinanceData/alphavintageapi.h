@@ -9,6 +9,7 @@
 
 
 #include "../Utils/datetime.h"
+#include "../Utils/DataTypes.h"
 
 
 namespace financedata {
@@ -108,15 +109,13 @@ public:
      *       на получившиеся данные после разбора
      * @return Стоимость компании по дням.
      */
-    const std::map< std::tuple< int, int, int >, double > & get_daily_price();
+    const std::map< utils::Date, utils::Transaction_t::price_t > & get_daily_price();
 
 private:
     /**
      * @brief daily_price Стоимость компании по дням.
      */
-    //todo: заменить std::tuple на структуру
-    // реализовать через boost::date_time
-    std::map< std::tuple< int, int, int >, double > daily_price;
+    std::map< utils::Date, utils::Transaction_t::price_t > daily_price;
 
 };
 

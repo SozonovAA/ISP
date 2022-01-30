@@ -15,14 +15,14 @@ namespace utils {
 const Date& operator++( Date& i ) {
     b_date_it a( b_date( i.year, i.mounth, i.day) );
     ++a;
-    i = ( std::tuple{a->year(), a->month(), a->day() } );
+    i = ( Date{a->year(), a->month(), a->day() } );
     return ( i );
 }
 
 const Date& operator--( Date& i ) {
     b_date_it a( b_date( i.year, i.mounth, i.day) );
     --a;
-    i = ( std::tuple{a->year(), a->month(), a->day() } );
+    i = ( Date{a->year(), a->month(), a->day() } );
     return i;
 }
 
@@ -31,7 +31,7 @@ const Date& Date::add_week()
     b_week_it a( b_date( this->year, this->mounth, this->day) );
 
     ++a;
-    *this = ( std::tuple{a->year(), a->month(), a->day() } );
+    *this = ( Date{a->year(), a->month(), a->day() } );
     return *this;
 }
 
@@ -40,7 +40,7 @@ const Date& Date::add_month()
     b_mon_it a( b_date( this->year, this->mounth, this->day) );
 
     ++a;
-    *this = ( std::tuple{a->year(), a->month(), a->day() } );
+    *this = ( Date{a->year(), a->month(), a->day() } );
     return *this;
 }
 
@@ -49,7 +49,7 @@ const Date& Date::add_year()
     b_year_it a( b_date( this->year, this->mounth, this->day) );
 
     ++a;
-    *this = ( std::tuple{a->year(), a->month(), a->day() } );
+    *this = ( Date{a->year(), a->month(), a->day() } );
     return *this;
 }
 
@@ -59,7 +59,7 @@ const Date& Date::decrease_week()
     b_week_it a( b_date( this->year, this->mounth, this->day) );
 
     --a;
-    *this = ( std::tuple{a->year(), a->month(), a->day() } );
+    *this = ( Date{a->year(), a->month(), a->day() } );
     return *this;
 }
 
@@ -68,7 +68,7 @@ const Date& Date::decrease_month()
     b_mon_it a( b_date( this->year, this->mounth, this->day) );
 
     --a;
-    *this = ( std::tuple{a->year(), a->month(), a->day() } );
+    *this = ( Date{a->year(), a->month(), a->day() } );
     return *this;
 }
 
@@ -77,7 +77,7 @@ const Date& Date::decrease_year()
     b_year_it a( b_date( this->year, this->mounth, this->day) );
 
     --a;
-    *this = ( std::tuple{a->year(), a->month(), a->day() } );
+    *this = ( Date{a->year(), a->month(), a->day() } );
     return *this;
 }
 

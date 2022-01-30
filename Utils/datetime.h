@@ -7,14 +7,13 @@
 #include <stdexcept>
 
 
+#include "DataTypes.h"
+
+
 
 
 namespace utils {
-
-typedef std::size_t year_t;
-typedef std::size_t mounth_t;
-typedef std::size_t day_t;
-
+using namespace Data_t;
 
 struct Date {
     Date ( year_t _y, mounth_t _m, day_t _d ) :
@@ -43,6 +42,19 @@ struct Date {
         year( _r.year ),
         mounth( _r.mounth ),
         day ( _r.day ) {
+    };
+
+    Date& operator=( Date& _r) {
+        // Проверка на самоприсваивание
+        if ( &_r == this)
+            return *this;
+
+        year =  _r.year;
+        mounth = _r.mounth;
+        day = _r.day;
+
+        return *this;
+
     };
 
     Date& operator=(const Date& _r) {
