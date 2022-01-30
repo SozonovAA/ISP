@@ -61,18 +61,17 @@ void AlphaVintageAPIReplyer::parce( std::string _reply)
     auto query = parser.parse( _reply );
     for ( auto [ key, value] : query.dict()["Time Series (Daily)"].dict() )
     {
-        daily_price[ std::make_tuple(
+        daily_price[ utils::Date{
                      std::stoi( key.substr(0, 4) ),
                      std::stoi( key.substr(5, 2) ),
                      std::stoi( key.substr(8, 2) )
-        )] = std::stod( value.dict()["4. close"].string() );
+        }] = std::stod( value.dict()["4. close"].string() );
     }
 
-    std::cout << daily_price.size() << std::endl;
 }
 
 
-const std::map< std::tuple< int, int, int >, double > &AlphaVintageAPIReplyer::get_daily_price()
+const std::map< utils::Date, utils::Transaction_t::price_t > &AlphaVintageAPIReplyer::get_daily_price()
 {
     return daily_price;
 }
