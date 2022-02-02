@@ -45,11 +45,17 @@ public:
     const transactions_map & get_transactions_map() = 0;
 
     /**
+     * @brief read_table составление истории сделок после чтения файла
+     * @return признак успешного чтения и составления истории сделок
+     */
+    virtual bool read_table( std::string _filepath, Brokers _broker );
+
+    /**
      * @brief set_transactions_map задать заранее сформированую мапу со
      * сделками пользователя
      */
     virtual
-    void set_transactions_map( transactions_map & _usr_transactions ) = 0;
+    void set_transactions_map( transactions_map & _usr_transactions ) ;
 
     /**
      * @brief add_transaction добавить транзакцию в мапу сделок
@@ -62,11 +68,7 @@ public:
      */
     virtual void delete_transaction( const single_transaction & _transaction );
 
-    /**
-     * @brief read_table составление истории сделок после чтения файла
-     * @return признак успешного чтения и составления истории сделок
-     */
-    virtual bool read_table( std::string _filepath, Brokers _broker ) = 0;
+
 };
 
 } // namespace teble_read
