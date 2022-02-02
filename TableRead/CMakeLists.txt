@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.17)
 project(TableRead)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 include(FetchContent)
 
 message(TableRead)
 
-#add_library(TableRead STATIC )
+add_library(TableRead STATIC IUserTransactionUpdater.h IUserTransactionUpdater.cpp)
 
 #include(BoostRootPath.cmake)
 #if(True)
@@ -39,8 +39,8 @@ message(TableRead)
 #target_link_libraries(FinanceData PRIVATE nlohmann_json::nlohmann_json)
 
 
-if(MINGW)
-    target_link_libraries(FinanceData ws2_32)
-endif()
+#if(MINGW)
+#    target_link_libraries(TableRead ws2_32)
+#endif()
 
 
