@@ -13,6 +13,11 @@ namespace utils {
  * Пространство имен для описания сделок
  */
 namespace Transaction_t{
+
+    /**
+     * @brief ticker_t тип данных тикера компании
+     */
+    typedef std::string ticker_t;
     /**
      * @brief price_t тип данных для предоставления данных о стоимости
      */
@@ -58,10 +63,6 @@ enum class TransactionType : std::uint16_t {
  * @brief Структура описывает сделки совершенные с ценными бумагами
  */
 struct Transaction {
-    /**
-     * @brief company_ticker тикер компании (код актива)
-     */
-    std::string company_ticker;
     /**
      * @brief number номер сделки
      */
