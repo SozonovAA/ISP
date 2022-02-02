@@ -7,12 +7,12 @@
 #include <stdexcept>
 
 
-#include "DataTypes.h"
-
-
-
-
 namespace utils {
+namespace Data_t {
+    typedef std::size_t year_t;
+    typedef std::size_t mounth_t;
+    typedef std::size_t day_t;
+} // namespace Data_t
 using namespace Data_t;
 
 struct Date {
